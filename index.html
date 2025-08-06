@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Compra y venta de vehículos seminuevos con garantía y atención personalizada en VP Motors.">
+  <meta name="keywords" content="autos, vehículos, seminuevos, compra, venta, financiamiento">
+  <title>VP Motors - Compra y venta de vehículos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+<style>
+  /* =================== FUENTES Y VARIABLES =================== */
+
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+  :root {
+    --vp-orange: #FF6F00;
+    --vp-white: #FFFFFF;
+    --vp-black: #000000;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    color: #333;
+  }
+
+  /* =================== NAVBAR =================== */
+
+  .navbar {
+    background-color: var(--vp-black);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  }
+
+  .nav-link {
+    color: var(--vp-white) !important;
+    position: relative;
+    margin: 0 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--vp-orange) !important;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--vp-orange);
+    transition: width 0.3s;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .btn-contacto {
+    background-color: var(--vp-orange);
+    color: var(--vp-white);
+    border: none;
+    transition: background-color 0.3s;
+    font-weight: 500;
+  }
+
+  .btn-contacto:hover {
+    background-color: #e65c00;
+    color: #fff;
+  }
+
+  .btn-contacto img {
+    width: 18px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+/* =================== CARRUSEL =================== */
+
+.carousel-item img {
+  height: 400px;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.carousel-caption .btn {
+  background-color: #ff6f00;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-caption .btn:hover {
+  background-color: #e65c00;
+  transform: scale(1.05);
+}
+
+.carousel-caption h5,
+.carousel-caption a.btn {
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+
+
+
+
+
+/* =================== AUTOS DESTACADOS =================== */
+
+.autos-destacados {
+  background-color: #f9f9f9;
+  padding: 4rem 2rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #222;
+  margin-bottom: 2rem;
+  position: relative;
+  animation: fadeInScale 0.8s ease forwards;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ee6b00;
+  margin: 0.5rem auto 1.5rem;
+  border-radius: 2px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.auto-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1.5rem;
+}
+
+.auto-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.auto-card h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.auto-card p {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.btn-detalles {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #d61c22;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-detalles:hover {
+  background-color: #b4171c;
+}
+
+.auto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* =================== CONTENEDOR Y COLUMNAS =================== */
+
+.contenedor {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2rem;
+  justify-content: center;
+  max-width: 1200px;
+  margin: auto;
+  align-items: stretch;
+}
+
+.columna1,
+.columna2 {
+  flex: 1 1 500px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  border-radius: 16px;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.columna1:hover,
+.columna2:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.columna1 > .container,
+.columna2 > .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =================== SECCIÓN GENERAL =================== */
+
+.container {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-4px);
+}
+
+/* =================== TÍTULOS Y TEXTOS =================== */
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+  animation: fadeInScale 0.8s ease forwards;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ee6b00;
+  margin: 0.5rem auto 1.5rem;
+  border-radius: 2px;
+}
+
+.text-center {
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+/* =================== TARJETAS =================== */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: #fdfdfd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  text-align: center;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  animation: none;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #3498db;
+  animation: iconBounce 2.5s ease-in-out infinite;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  color: #2c3e50;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* =================== ANIMACIONES =================== */
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes iconBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+/* Animación para las imágenes del carrusel */
+.carousel-item img {
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Animación para el caption */
+.carousel-caption > div {
+  animation: fadeInScale 1s ease forwards;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Reuso de animaciones ya definidas */
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* =================== BOTÓN NARANJA =================== */
+
+.btn-warning {
+  display: inline-block;
+  background-color: #ff6f00;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.1rem;
+  user-select: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #e65c00;
+  transform: scale(1.05);
+}
+
+/* =================== SECCIÓN OPINIONES / GOOGLE REVIEWS =================== */
+
+.container2 {
+  max-width: 1200px;
+  margin: 0 auto 5rem auto;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease-in-out;
+}
+
+.container2:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+.container2 .section-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  position: relative;
+  line-height: 1.2;
+}
+
+.container2 .section-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  margin: 1rem auto 0;
+  background: #ff5e3a;
+  border-radius: 2px;
+}
+
+.container2 .d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container2 .elfsight-app-f48c64ce-24b0-48f6-ad16-f5409878a4e7 {
+  width: 100%;
+  max-width: 800px;
+}
+
+/* =================== AOS ANIMATIONS =================== */
+
+[data-aos="fade-up"] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+[data-aos="fade-up"].aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+  /* =================== FOOTER ALT =================== */
+
+  .footer-alt {
+    background: linear-gradient(135deg, #222, #111);
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 3rem 1.5rem 2rem;
+    box-shadow: inset 0 0 30px #000000cc;
+    border-top: 4px solid #ff6f00;
+  }
+
+  .footer-wrap {
+    max-width: 1100px;
+    margin: 0 auto 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-left: 4px solid #ff6f00;
+    padding-left: 1rem;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .icon-link img {
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 0 3px #ff6f00);
+    transition: transform 0.3s ease;
+  }
+
+  .icon-link:hover img {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px #ffa733);
+  }
+
+  .map-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .quick-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-quick {
+    background-color: #ff6f00;
+    color: #0a0a0a;
+    font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.6rem;
+    text-decoration: none;
+
+    text-align: center;
+    user-select: none;
+  }
+
+  .btn-quick:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+  }
+
+  .footer-bottom-alt {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    border-top: 1px solid #444;
+    padding-top: 1.2rem;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+
+  .footer-bottom-alt a {
+    color: #ff6f00;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-bottom-alt a:hover {
+    color: #e65c00;
+  }
+
+  /*RESPONSIVE*/
+  /* =================== RESPONSIVE =================== */
+
+@media (max-width: 991px) {
+  .carousel {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+  .contenedor {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .carousel-item img {
+    height: 250px;
+  }
+
+  .carousel-caption {
+    padding: 1rem;
+    max-width: 90%;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .auto-card img {
+    height: 180px;
+  }
+
+  .container2 {
+    padding: 2.5rem 1rem;
+  }
+
+  .container {
+    padding: 2rem 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+
+  .navbar .btn-contacto {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-wrap {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .btn-quick {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .carousel-caption h5 {
+    font-size: 1.1rem;
+  }
+
+  .carousel-caption .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+  .titulo-redes {
+    font-size: 1.5rem;
+  }
+
+  .subtitulo-redes {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .btn-warning {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .footer-heading {
+    font-size: 1.3rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+  }
+}
+
+</style>
+
+</head>
+<body>
+
+  
+    <!-- NAVBAR VP MOTORS -->
+    <nav class="navbar navbar-expand-lg px-3 sticky-top" data-aos="fade-down">
+      <div class="container-fluid">
+
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="stock.html">Stock</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="financiamiento.html">Financiamiento</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="vender.html">Vende tu vehículo</a>
+            </li>
+          </ul>
+          <a href="https://wa.me/56988276054?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20veh%C3%ADculos" target="_blank" class="btn btn-contacto btn-sm ms-3">
+            <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="WhatsApp" />
+            Contáctanos
+          </a>
+        </div>
+      </div>
+    </nav>
+
+<div id="vpCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500" style="max-width: 1700px; margin: 2rem auto 0 auto; width: 100%;">
+  <div class="carousel-inner rounded shadow">
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <img src="images/carrusel/stock.avif" class="d-block w-100 object-fit-cover" alt="Stock" style="height: 400px; object-fit: cover;" />
+      <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="bg-dark bg-opacity-50 p-3 rounded text-center">
+          <h5 class="text-white mb-3">Revisa nuestro stock</h5>
+          <a href="stock.html" class="btn btn-warning px-4 py-2">Ir a Stock</a>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <img src="images/carrusel/financiamiento.avif" class="d-block w-100 object-fit-cover" alt="Financiamiento" style="height: 400px; object-fit: cover;" />
+      <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="bg-dark bg-opacity-50 p-3 rounded text-center">
+          <h5 class="text-white mb-3">¿Buscas financiamiento?</h5>
+          <a href="financiamiento.html" class="btn btn-warning px-4 py-2">Ver opciones</a>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <img src="images/carrusel/vender.avif" class="d-block w-100 object-fit-cover" alt="Quiénes Somos" style="height: 400px; object-fit: cover;" />
+      <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="bg-dark bg-opacity-50 p-3 rounded text-center">
+          <h5 class="text-white mb-3">Vende tu vehículo</h5>
+          <a href="vender.html" class="btn btn-warning px-4 py-2">Ir a sección</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#vpCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#vpCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+
+
+  <section class="autos-destacados">
+  <div class="container">
+    <h2 class="section-title">Autos Destacados</h2>
+    <div class="cards-grid">
+      <!-- Tarjeta 1 -->
+      <div class="auto-card">
+        <img src="images/audi1.jpg" alt="Auto 1">
+        <h3>Porsche Cayenne 2014</h3>
+        <p>Motor diesel, excelente estado, 120.000 km.</p>
+        <a href="stock.html" class="btn-detalles">Ver detalles</a>
+      </div>
+      <!-- Tarjeta 2 -->
+      <div class="auto-card">
+        <img src="images/nissan1.JPG" alt="Auto 2">
+        <h3>BMW X5 2016</h3>
+        <p>Full equipo, cuero, sunroof, 90.000 km.</p>
+        <a href="stock.html" class="btn-detalles">Ver detalles</a>
+      </div>
+      <!-- Tarjeta 3 -->
+      <div class="auto-card">
+        <img src="images/peugeot1.jpg" alt="Auto 3">
+        <h3>Mercedes-Benz GLC 2020</h3>
+        <p>Tracción 4MATIC, 60.000 km.</p>
+        <a href="stock.html" class="btn-detalles">Ver detalles</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+<div class="contenedor">
+  <!-- QUIÉNES SOMOS -->
+  <div class="columna1">
+    <section class="container" data-aos="fade-up" data-aos-delay="100">
+      <h2 class="section-title">¿Quiénes somos?</h2>
+      <p class="text-center">
+        Bienvenido a VP Motors, tu destino confiable para la compra y venta de tu vehículo.
+        En VP Motors, entendemos que tanto la compra como la venta de un vehículo es una decisión importante
+        y queremos que tengas una experiencia única y satisfactoria.
+        Nos enorgullece ofrecer una amplia selección de automóviles seminuevos de diferentes marcas y modelos,
+        todos ellos sometidos a rigurosas inspecciones para garantizar su calidad y confiabilidad.
+      </p>
+    </section>
+  </div>
+
+  <!-- CONTACTO -->
+  <div class="columna2">
+    <section class="container" data-aos="fade-up" data-aos-delay="100">
+      <h2 class="section-title">Contáctanos</h2>
+      <div class="contacto-info">
+        <div class="contacto-item">
+          <span class="contacto-icon">📍</span>
+          <div>
+            <h5>Dirección</h5>
+            <p>Avenida Las Condes 12345, Santiago, Chile</p>
+          </div>
+        </div>
+
+        <div class="contacto-item">
+          <span class="contacto-icon">📞</span>
+          <div>
+            <h5>Teléfono</h5>
+            <p>+56 9 1234 5678</p>
+          </div>
+        </div>
+
+        <div class="contacto-item">
+          <span class="contacto-icon">✉️</span>
+          <div>
+            <h5>Correo</h5>
+            <p>contacto@vpmotors.cl</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div> <!-- ✅ FIN DEL DIV .contenedor -->
+
+
+<!-- RESEÑAS GOOGLE -->
+<section class="container2" data-aos="fade-up" data-aos-delay="200">
+  <h2 class="section-title">Opiniones de nuestros clientes</h2>
+  <div class="d-flex justify-content-center">
+    <div class="elfsight-app-f48c64ce-24b0-48f6-ad16-f5409878a4e7" data-elfsight-app-lazy></div>
+  </div>
+</section>
+
+
+<section class="redes-sociales">
+  <div class="contenedor-redes">
+    <h2 class="section-title">Síguenos en Instagram</h2>
+    <p class="subtitulo-redes">Mantente conectado con nuestras últimas novedades</p>
+    
+    <!-- Widget de Elfsight -->
+    <script src="https://static.elfsight.com/platform/platform.js" async></script>
+    <div class="elfsight-app-5ffdf45d-cdb0-4947-a2db-04e5fb9647c3" data-elfsight-app-lazy></div>
+  </div>
+</section>
+
+<style>
+  .redes-sociales {
+  background: #f9f9f9;
+  padding: 60px 20px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.contenedor-redes {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.titulo-redes {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.subtitulo-redes {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.elfsight-app-5ffdf45d-cdb0-4947-a2db-04e5fb9647c3 {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+</style>
+<!-- Script Elfsight -->
+<script src="https://static.elfsight.com/platform/platform.js" async></script>
+
+<!-- FOOTER -->
+<footer class="footer-alt" data-aos="fade-up" data-aos-delay="400">
+  <div class="footer-wrap">
+
+    <!-- REDES SOCIALES -->
+    <div class="footer-column social">
+      <h4 class="footer-heading">Conéctate con nosotros</h4>
+      <div class="social-links">
+        <a href="https://www.instagram.com/ccautos.cl" target="_blank" aria-label="Instagram" class="icon-link">
+          <img src="images/icons/ig.svg" alt="Instagram" />
+        </a>
+        <a href="https://www.facebook.com/ccautos.cl" target="_blank" aria-label="Facebook" class="icon-link">
+          <img src="images/icons/fb.svg" alt="Facebook" />
+        </a>
+        <a href="https://wa.me/56988276054" target="_blank" aria-label="WhatsApp" class="icon-link">
+          <img src="images/icons/wp.svg" alt="WhatsApp" />
+        </a>
+      </div>
+    </div>
+
+    <!-- MAPA -->
+    <div class="footer-column map">
+      <h4 class="footer-heading">Encuéntranos aquí</h4>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2005.704283806157!2d-70.54977287795657!3d-33.4088170678863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce9569ad04e7%3A0xa64894df53a73b2f!2sAv.%20Apoquindo%207935%2C%207571514%20Las%20Condes%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e1!3m2!1ses!2snl!4v1753989873260!5m2!1ses!2snl"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+
+    <!-- UBICACIÓN RÁPIDA -->
+    <div class="footer-column quick-links">
+      <h4 class="footer-heading">Ubicación rápida</h4>
+      <nav class="quick-nav">
+        <a href="https://www.google.com/maps?q=Av.+Apoquindo+7935,+Las+Condes,+Chile" target="_blank" class="btn-quick">Google Maps</a>
+        <a href="https://waze.com/ul?ll=-33.4090082,-70.5496937&navigate=yes" target="_blank" class="btn-quick">Waze</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <div class="footer-bottom-alt">
+    <p>&copy; 2025 <strong>CC Autos</strong>. Todos los derechos reservados.</p>
+    <p>Diseñado y protegido por <a href="mailto:picininiluciano@gmail.com">Luciano</a>.</p>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: 'ease-in-out',
+    });
+  </script>
+</body>
+</html>

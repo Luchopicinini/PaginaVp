@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+
+  <style>
+    /* -----------------------------------
+   🎨 Variables globales y ajustes base
+--------------------------------------*/
+:root {
+  --vp-orange: #FF6F00;  /* Naranja principal de marca */
+  --vp-white: #FFFFFF;   /* Blanco general */
+  --vp-black: #000000;   /* Negro general */
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff; /* Fondo general oscuro */
+  color: var(--vp-white);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ------------------------------
+   📦 Layout principal
+-------------------------------*/
+main {
+  flex: 1 0 auto; /* Hace que empuje el footer al fondo */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* ------------------------------
+   🧭 Navbar (barra de navegación)
+-------------------------------*/
+.navbar {
+  background-color: var(--vp-black);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.nav-link {
+  color: var(--vp-white) !important;
+  position: relative;
+  margin: 0 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--vp-orange) !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--vp-orange);
+  transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ------------------------------
+   🦸‍♂️ Hero principal
+-------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.hero-container {
+  background: white;
+  color: #ebe8e8;
+  padding: 60px 20px;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 45vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 100%;
+  animation: slideInLeft 1.2s ease-out;
+  padding: 20px 30px;
+  background-color: rgba(0, 0, 0, 0.932);
+  border-left: 6px solid #ff6f00;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.hero-content h1 span {
+  color: #ff6f00;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  color: #dddddd;
+}
+
+.cta-button {
+  background-color: #ff6f00;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  background-color: #e65c00;
+  transform: translateX(5px);
+}
+
+/* Animación entrada desde la izquierda */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-container {
+    min-height: 70vh;
+    padding: 40px 10px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* ------------------------------
+   🧱 Layout general + Filtros
+-------------------------------*/
+.layout-principal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 30px 20px;
+}
+
+/* Filtros */
+.filtros {
+  flex: 1 1 100%;
+  max-width: 250px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filtros-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.filtro label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.filtro select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.filtro label {
+  color: #000000;
+}
+
+/* ------------------------------
+   🚗 Catálogo de vehículos
+-------------------------------*/
+.catalogo {
+  flex: 3 1 70%;
+}
+
+.catalogo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card-auto {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.829);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.card-auto:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  position: relative;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.etiqueta-nuevo2 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ff5722;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  border-radius: 5px;
+}
+
+.view-more {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #000;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.view-more:hover {
+  background-color: #ff6f00;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+
+.specs {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  font-size: 0.85rem;
+  background-color: #000000;
+}
+
+.card-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.card-info h4 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.card-info .version {
+  font-size: 0.85rem;
+  color: #686363;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border-top: 1px solid #eee;
+  font-size: 0.85rem;
+}
+
+.card-footer .whatsapp-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  color: #25D366;
+}
+
+.card-footer .whatsapp-link img {
+  width: 18px;
+}
+
+.separator {
+  flex-grow: 1;
+  height: 1px;
+  background: #000000;
+  margin: 0 10px;
+}
+
+.price {
+  text-align: right;
+  color: #e53935; /* Rojo elegante */
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 8px;
+}
+
+
+/* ------------------------------
+   📞 Botón de contacto
+-------------------------------*/
+.btn-contacto {
+  background-color: var(--vp-orange);
+  color: var(--vp-white);
+  border: none;
+  transition: background-color 0.3s;
+  font-weight: 500;
+}
+
+.btn-contacto:hover {
+  background-color: #e65c00;
+  color: #fff;
+}
+
+.btn-contacto img {
+  width: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* ------------------------------
+   👣 Footer principal
+--  /* =================== FOOTER ALT =================== */
+
+  .footer-alt {
+    background: linear-gradient(135deg, #222, #111);
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 3rem 1.5rem 2rem;
+    box-shadow: inset 0 0 30px #000000cc;
+    border-top: 4px solid #ff6f00;
+  }
+
+  .footer-wrap {
+    max-width: 1100px;
+    margin: 0 auto 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-left: 4px solid #ff6f00;
+    padding-left: 1rem;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .icon-link img {
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 0 3px #ff6f00);
+    transition: transform 0.3s ease;
+  }
+
+  .icon-link:hover img {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px #ffa733);
+  }
+
+  .map-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .quick-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-quick {
+    background-color: #ff6f00;
+    color: #0a0a0a;
+    font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.6rem;
+    text-decoration: none;
+
+    text-align: center;
+    user-select: none;
+  }
+
+  .btn-quick:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+  }
+
+  .footer-bottom-alt {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    border-top: 1px solid #444;
+    padding-top: 1.2rem;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+
+  .footer-bottom-alt a {
+    color: #ff6f00;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-bottom-alt a:hover {
+    color: #e65c00;
+  }
+
+/* RESPONSIVE SOLO PARA 758px O MENOS */
+@media (max-width: 758px) {
+  /* Hero */
+  .hero-container {
+    flex-direction: column;
+    padding: 30px 15px;
+    min-height: 60vh;
+    text-align: center;
+  }
+
+  .hero-content {
+    padding: 20px;
+    border-left: none;
+    border-top: 6px solid #ff6f00;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: 0.95rem;
+  }
+
+  .cta-button {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  /* Layout principal */
+  .layout-principal {
+    flex-direction: column;
+    padding: 20px 15px;
+  }
+
+  .filtros {
+    display: none;
+  }
+
+  .catalogo {
+    width: 100%;
+  }
+
+  .catalogo-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+
+  /* Card */
+  .card-auto {
+    border-radius: 8px;
+  }
+
+  .specs {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .card-info h4 {
+    font-size: 0.95rem;
+  }
+
+  .card-info .version {
+    font-size: 0.8rem;
+  }
+
+  .card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.8rem;
+  }
+
+  .card-footer .whatsapp-link img {
+    width: 16px;
+  }
+
+  .view-more {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .price {
+    text-align: left;
+    font-size: 1rem;
+  }
+
+  /* Navbar */
+  .navbar .btn-contacto {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .footer-heading {
+    font-size: 1.3rem;
+  }
+
+
+}
+  
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR VP MOTORS -->
+  <nav class="navbar navbar-expand-lg px-3 sticky-top" data-aos="fade-down">
+    <div class="container-fluid">
+
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  active" href="stock.html">Stock</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="financiamiento.html">Financiamiento</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="vender.html">Vende tu vehículo</a>
+          </li>
+        </ul>
+        <a href="https://wa.me/56974891078?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20veh%C3%ADculos" target="_blank" class="btn btn-contacto btn-sm ms-3">
+          <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="WhatsApp" />
+          Contáctanos
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-container" role="banner" aria-label="Presentación principal">
+  <div class="hero-content">
+    <h1>Encuentra el auto de tus sueños<br> con <span>Vp motors.</span></h1>
+    <p>Explora nuestra selección de vehículos con garantía, precios insuperables y atención personalizada.</p>
+    <a href="#catalogo" class="cta-button">Ver catálogo</a>
+  </div>
+</section>
+
+  <div class="layout-principal">
+
+  <!-- FILTROS -->
+  <aside class="filtros" aria-label="Filtros de búsqueda de autos">
+    <div class="filtros-wrapper">
+      <form id="formFiltros">
+        <div class="filtro">
+          <label for="marca">Marca:</label>
+          <select id="marca" name="marca">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="filtro">
+          <label for="anio">Año:</label>
+          <select id="anio" name="anio">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="filtro">
+          
+          <label for="precio">Precio hasta:</label>
+          <select id="precio" name="precio">
+            <option value="">Sin límite</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </aside>
+
+
+<!-- CATÁLOGO -->
+    <section class="catalogo" id="catalogo">
+      <div class="catalogo-grid">
+        <!-- Auto 1 -->
+        <div class="card-auto" data-marca="Subaru" data-anio="2024" data-precio="20000000">
+          <div class="card-image">
+            <img src="images/carrusel/stock.avif" alt="Subaru WRX TS 2024" />
+            <div class="etiqueta-nuevo2">Recién llegado</div>
+            <a href="detalle.html?auto=subaru" class="view-more">Ver más</a>
+          </div>
+          <div class="specs">
+            <span>2024</span>
+            <span>Automática</span>
+            <span>27.000Km</span>
+          </div>
+          <div class="card-info">
+            <h4 class="model">SUBARU WRX TS</h4>
+            <p class="version">Motor 2.4 CVT | Tracción AWD</p>
+          </div>
+          <div class="card-footer">
+                        <a href="https://wa.me/56988276054" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px; background:#25D366; color:white; text-decoration:none; border-radius:4px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="20" style="vertical-align:middle; margin-right:8px;" />
+              Contactar por WhatsApp
+            </a>
+            <div class="separator"></div>
+            <div class="price">
+              Precio lista<br />
+              <strong>$20.000.000</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auto 2 --> 
+
+        
+        <div class="card-auto" data-marca="Suzuki" data-anio="2017" data-precio="20000000">
+          <div class="card-image">
+            <img src="images/carrusel/stock.avif" alt="Subaru WRX TS 2024" />
+            <div class="etiqueta-nuevo2">Recién llegado</div>
+           <a href="detalle.html?auto=suzuki" class="view-more">Ver más</a>
+          </div>
+          <div class="specs">
+            <span>2017</span>
+            <span>Automática</span>
+            <span>27.000Km</span>
+          </div>
+          <div class="card-info">
+            <h4 class="model">SUZUKI WRX TS</h4>
+            <p class="version">Motor 2.4 CVT | Tracción AWD</p>
+          </div>
+          <div class="card-footer">
+            <a href="https://wa.me/56988276054" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px; background:#25D366; color:white; text-decoration:none; border-radius:4px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="20" style="vertical-align:middle; margin-right:8px;" />
+              Contactar por WhatsApp
+            </a>
+            <div class="separator"></div>
+            <div class="price">
+              Precio lista<br />
+              <strong>$20.000.000</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-auto" data-marca="Peugeot" data-anio="2023" data-precio="21000000">
+          <div class="card-image">
+            <img src="images/carrusel/stock.avif" alt="Subaru WRX TS 2024" />
+            <div class="etiqueta-nuevo2">Recién llegado</div>
+            <a href="detalle.html?auto=toyota" class="view-more">Ver más</a>
+
+          </div>
+          <div class="specs">
+            <span>2023</span>
+            <span>Automática</span>
+            <span>27.000Km</span>
+          </div>
+          <div class="card-info">
+            <h4 class="model">PEUGEOT WRX TS</h4>
+            <p class="version">Motor 2.4 CVT | Tracción AWD</p>
+          </div>
+          <div class="card-footer">
+            <a href="https://wa.me/56988276054" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px; background:#25D366; color:white; text-decoration:none; border-radius:4px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="20" style="vertical-align:middle; margin-right:8px;" />
+              Contactar por WhatsApp
+            </a>
+            <div class="separator"></div>
+            <div class="price">
+              Precio lista<br />
+              <strong>$21.000.000</strong>
+            </div>
+          </div>
+        </div>
+
+                <div class="card-auto" data-marca="Peugeot" data-anio="2023" data-precio="21000000">
+          <div class="card-image">
+            <img src="images/carrusel/stock.avif" alt="Subaru WRX TS 2024" />
+            <div class="etiqueta-nuevo2">Recién llegado</div>
+            <a href="detalle.html?auto=toyota" class="view-more">Ver más</a>
+
+          </div>
+          <div class="specs">
+            <span>2023</span>
+            <span>Automática</span>
+            <span>27.000Km</span>
+          </div>
+          <div class="card-info">
+            <h4 class="model">PEUGEOT WRX TS</h4>
+            <p class="version">Motor 2.4 CVT | Tracción AWD</p>
+          </div>
+          <div class="card-footer">
+            <a href="https://wa.me/56988276054" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px; background:#25D366; color:white; text-decoration:none; border-radius:4px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="20" style="vertical-align:middle; margin-right:8px;" />
+              Contactar por WhatsApp
+            </a>
+            <div class="separator"></div>
+            <div class="price">
+              Precio lista<br />
+              <strong>$21.000.000</strong>
+            </div>
+          </div>
+        </div>
+
+        
+      </div>
+    </section>
+  </div>
+
+<!-- JAVASCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.card-auto');
+  const marcaSelect = document.getElementById('marca');
+  const anioSelect = document.getElementById('anio');
+  const precioSelect = document.getElementById('precio');
+
+  // Función para obtener opciones únicas ordenadas a partir de un filtro
+  function obtenerOpciones(filtroMarca, filtroAnio) {
+    const marcas = new Set();
+    const anios = new Set();
+    const precios = new Set();
+
+    cards.forEach(card => {
+      const cardMarca = card.dataset.marca;
+      const cardAnio = card.dataset.anio;
+      const cardPrecio = card.dataset.precio;
+
+      if ((!filtroMarca || cardMarca === filtroMarca) &&
+          (!filtroAnio || cardAnio === filtroAnio)) {
+        marcas.add(cardMarca);
+        anios.add(cardAnio);
+        precios.add(cardPrecio);
+      }
+    });
+
+    return {
+      marcas: Array.from(marcas).sort(),
+      anios: Array.from(anios).sort(),
+      precios: Array.from(precios).sort((a,b) => a - b)
+    };
+  }
+
+  // Llena un select con opciones
+  function llenarSelect(select, opciones, primerOpcion) {
+    select.innerHTML = '';
+    const opcionDefault = document.createElement('option');
+    opcionDefault.value = '';
+    opcionDefault.textContent = primerOpcion;
+    select.appendChild(opcionDefault);
+
+    opciones.forEach(valor => {
+      const option = document.createElement('option');
+      option.value = valor;
+      option.textContent = valor;
+      select.appendChild(option);
+    });
+  }
+
+  // Inicializa selects con todas las opciones
+  const opcionesIniciales = obtenerOpciones();
+  llenarSelect(marcaSelect, opcionesIniciales.marcas, 'Todas');
+  llenarSelect(anioSelect, opcionesIniciales.anios, 'Todos');
+  llenarSelect(precioSelect, opcionesIniciales.precios, 'Sin límite');
+
+  function filtrarCatalogo() {
+    const marca = marcaSelect.value;
+    const anio = anioSelect.value;
+    const precio = precioSelect.value;
+
+    cards.forEach(card => {
+      const cardMarca = card.dataset.marca;
+      const cardAnio = card.dataset.anio;
+      const cardPrecio = parseInt(card.dataset.precio);
+
+      const coincideMarca = !marca || cardMarca === marca;
+      const coincideAnio = !anio || cardAnio === anio;
+      const coincidePrecio = !precio || cardPrecio <= parseInt(precio);
+
+      if (coincideMarca && coincideAnio && coincidePrecio) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Actualiza opciones en selects dependientes
+  function actualizarFiltros() {
+    const marca = marcaSelect.value;
+    const anio = anioSelect.value;
+
+    // Obtiene opciones según filtros actuales
+    const opciones = obtenerOpciones(marca, anio);
+
+    // Actualizar años según marca seleccionada
+    if (!anio) { // solo actualizar años si no hay año seleccionado (para no resetear)
+      llenarSelect(anioSelect, opciones.anios, 'Todos');
+    }
+
+    // Actualizar precios según marca y año seleccionados
+    llenarSelect(precioSelect, opciones.precios, 'Sin límite');
+  }
+
+  // Escuchar cambios en marca y año para actualizar filtros y luego filtrar catálogo
+  marcaSelect.addEventListener('change', () => {
+    actualizarFiltros();
+    filtrarCatalogo();
+  });
+
+  anioSelect.addEventListener('change', () => {
+    actualizarFiltros();
+    filtrarCatalogo();
+  });
+
+  precioSelect.addEventListener('change', filtrarCatalogo);
+
+  // Filtrar al cargar por si hay valores por defecto
+  filtrarCatalogo();
+});
+
+</script>
+
+  <!-- FOOTER -->
+  <footer class="footer-alt" data-aos="fade-up" data-aos-delay="400">
+    <div class="footer-wrap">
+      <div class="footer-column social">
+        <h4 class="footer-heading">Conéctate con nosotros</h4>
+        <div class="social-links">
+          <a href="https://www.instagram.com/ccautos.cl" target="_blank" aria-label="Instagram" class="icon-link">
+            <img src="images/icons/ig.svg" alt="Instagram" />
+          </a>
+          <a href="https://www.facebook.com/ccautos.cl" target="_blank" aria-label="Facebook" class="icon-link">
+            <img src="images/icons/fb.svg" alt="Facebook" />
+          </a>
+          <a href="https://wa.me/56988276054" target="_blank" aria-label="WhatsApp" class="icon-link">
+            <img src="images/icons/wp.svg" alt="WhatsApp" />
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-column map">
+        <h4 class="footer-heading">Encuéntranos aquí</h4>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2005.704283806157!2d-70.54977287795657!3d-33.4088170678863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce9569ad04e7%3A0xa64894df53a73b2f!2sAv.%20Apoquindo%207935%2C%207571514%20Las%20Condes%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e1!3m2!1ses!2snl!4v1753989873260!5m2!1ses!2snl"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <div class="footer-column quick-links">
+        <h4 class="footer-heading">Ubicación rápida</h4>
+        <nav class="quick-nav">
+          <a href="https://www.google.com/maps?q=Av.+Apoquindo+7935,+Las+Condes,+Chile" target="_blank" class="btn-quick">Google Maps</a>
+          <a href="https://waze.com/ul?ll=-33.4090082,-70.5496937&navigate=yes" target="_blank" class="btn-quick">Waze</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer-bottom-alt">
+      <p>&copy; 2025 <strong>CC Autos</strong>. Todos los derechos reservados.</p>
+      <p>Diseñado y protegido por <a href="mailto:picininiluciano@gmail.com">Luciano</a>.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>

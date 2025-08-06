@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Compra y venta de vehículos seminuevos con garantía y atención personalizada en VP Motors.">
+  <meta name="keywords" content="autos, vehículos, seminuevos, compra, venta, financiamiento">
+  <title>Stock</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+
+  <style>
+    :root {
+      --vp-orange: #FF6F00;
+      --vp-white: #FFFFFF;
+      --vp-black: #000000;
+    }
+
+    .navbar {
+      background-color: var(--vp-black);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .nav-link {
+      color: var(--vp-white) !important;
+      position: relative;
+      margin: 0 0.5rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--vp-orange) !important;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--vp-orange);
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-contacto {
+      background-color: var(--vp-orange);
+      color: var(--vp-white);
+      border: none;
+      transition: background-color 0.3s;
+      font-weight: 500;
+    }
+
+    .btn-contacto:hover {
+      background-color: #e65c00;
+      color: #fff;
+    }
+
+    .btn-contacto img {
+      width: 18px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+.vehiculo-detalle {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Arial', sans-serif;
+}
+
+.vehiculo-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+}
+
+.galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.imagen-principal {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.thumbnails {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.thumbnails img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: transform 0.2s ease, border 0.2s ease;
+}
+
+.thumbnails img:hover {
+  transform: scale(1.05);
+}
+
+.info-vehiculo h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+#car-description {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.formulario-cotizacion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formulario-cotizacion input,
+.formulario-cotizacion textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.campo-doble {
+  display: flex;
+  gap: 1rem;
+}
+
+.campo-doble input {
+  flex: 1;
+}
+
+.opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+button[type="submit"] {
+  background-color: black;
+  color: white;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vehiculo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campo-doble {
+    flex-direction: column;
+  }
+}
+
+
+    /* TIPOGRAFÍA GENERAL */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #f0f0f0;
+      line-height: 1.6;
+      background-color: #d3c5c58c; /* fondo oscuro general para todo */
+      margin: 0;
+      padding: 0;
+    }
+
+
+    .footer-alt {
+      background: linear-gradient(135deg, #222, #111);
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 3rem 1.5rem 2rem;
+      box-shadow: inset 0 0 30px #000000cc;
+      border-top: 4px solid #ff6f00;
+    }
+
+    .footer-wrap {
+      max-width: 1100px;
+      margin: 0 auto 2rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .footer-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-heading {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ff6f00;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-left: 4px solid #ff6f00;
+      padding-left: 1rem;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .icon-link img {
+      width: 36px;
+      height: 36px;
+      filter: drop-shadow(0 0 3px #ff6f00);
+      transition: transform 0.3s ease;
+    }
+
+    .icon-link:hover img {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 8px #ffa733);
+    }
+
+    .map-container {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 1rem;
+           overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .quick-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn-quick {
+      background-color: #ff6f00;
+      color: #1a1a1a;
+      font-weight: 700;
+      padding: 0.6rem 1.4rem;
+      border-radius: 0.6rem;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(255, 111, 0, 0.5);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      text-align: center;
+      user-select: none;
+    }
+
+    .btn-quick:hover {
+      background-color: #e65c00;
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(230, 92, 0, 0.7);
+    }
+
+    .footer-bottom-alt {
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+      border-top: 1px solid #444;
+      padding-top: 1.2rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .footer-bottom-alt a {
+      color: #ff6f00;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-bottom-alt a:hover {
+      color: #e65c00;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR VP MOTORS -->
+  <nav class="navbar navbar-expand-lg px-3 sticky-top" data-aos="fade-down">
+    <div class="container-fluid">
+
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="stock.html">Stock</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="financiamiento.html">Financiamiento</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="vender.html">Vende tu vehículo</a>
+          </li>
+        </ul>
+        <a href="https://wa.me/56974891078?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20veh%C3%ADculos" target="_blank" class="btn btn-contacto btn-sm ms-3">
+          <img src="https://cdn-icons-png.flaticon.com/24/733/733585.png" alt="WhatsApp" />
+          Contáctanos
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+<section class="vehiculo-detalle">
+  <div class="vehiculo-grid">
+    <!-- Galería -->
+    <div class="galeria-mejorada">
+      <div class="galeria-principal">
+        <img id="main-img" src="" alt="Imagen principal del vehículo" />
+      </div>
+      <div class="galeria-miniaturas" id="miniaturas"></div>
+    </div>
+
+    <!-- Información -->
+    <div class="info-vehiculo">
+      <h1 id="car-title">Cargando vehículo...</h1>
+      <p id="car-description">Espere un momento por favor.</p>
+
+    </div>
+  </div>
+  <form class="formulario-cotizacion">
+        <h3>Cotiza este vehículo</h3>
+        <input type="text" placeholder="Nombre y Apellido*" required />
+        <div class="campo-doble">
+          <input type="tel" placeholder="Teléfono*" required />
+          <input type="email" placeholder="E-mail*" required />
+        </div>
+        <textarea placeholder="Mensaje*" rows="4" required></textarea>
+        <button type="submit">ENVIAR</button>
+      </form>
+</section>
+
+
+<style>
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f6f7;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Contenedor principal */
+.vehiculo-detalle {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Grid con dos columnas */
+.vehiculo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .vehiculo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Galería */
+.galeria-mejorada {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Imagen principal con tamaño fijo y recorte */
+.galeria-principal {
+  width: 100%;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.galeria-principal:hover {
+  transform: scale(1.02);
+}
+
+.galeria-principal img#main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Miniaturas tamaño fijo, con borde y efecto */
+.galeria-miniaturas {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.galeria-miniaturas img {
+  flex: 0 0 auto;
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.galeria-miniaturas img:hover,
+.galeria-miniaturas img.active {
+  border-color: #2a7ae2;
+  box-shadow: 0 0 10px rgba(42, 122, 226, 0.5);
+}
+
+/* Ocultar scroll en webkit pero mantener funcional */
+.galeria-miniaturas::-webkit-scrollbar {
+  height: 8px;
+}
+
+.galeria-miniaturas::-webkit-scrollbar-thumb {
+  background: #a9c1f5;
+  border-radius: 4px;
+}
+
+.galeria-miniaturas::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Información del vehículo */
+.info-vehiculo {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+#car-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0;
+  color: #2a7ae2;
+}
+
+#car-description {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Formulario */
+.formulario-cotizacion {
+  background: #f9fbff;
+  padding: 25px 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px #e1e8f7;
+  border: 1px solid #cbd6f5;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-cotizacion:hover {
+  border-color: #2a7ae2;
+}
+
+.formulario-cotizacion h3 {
+  margin: 0 0 20px;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: #2a7ae2;
+}
+
+/* Inputs y textarea */
+.formulario-cotizacion input[type="text"],
+.formulario-cotizacion input[type="tel"],
+.formulario-cotizacion input[type="email"],
+.formulario-cotizacion textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  resize: vertical;
+}
+
+.formulario-cotizacion input[type="text"]:focus,
+.formulario-cotizacion input[type="tel"]:focus,
+.formulario-cotizacion input[type="email"]:focus,
+.formulario-cotizacion textarea:focus {
+  outline: none;
+  border-color: #2a7ae2;
+  box-shadow: 0 0 8px rgba(42, 122, 226, 0.5);
+  background: #fff;
+}
+
+/* Campos dobles */
+.campo-doble {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.campo-doble input {
+  flex: 1;
+}
+
+/* Botón */
+.formulario-cotizacion button[type="submit"] {
+  width: 100%;
+  background: #2a7ae2;
+  color: white;
+  padding: 14px 0;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(42, 122, 226, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.formulario-cotizacion button[type="submit"]:hover {
+  background: #1d5bbf;
+}
+
+</style>
+
+<script>
+  function cambiarImagen(el) {
+    const main = document.getElementById('main-img');
+    main.src = el.src;
+  }
+</script>
+
+<script>
+  const autos = {
+    subaru: {
+      title: "Subaru WRX TS 2024",
+      description: `
+        Motor 2.4 CVT con tracción AWD, Bencinero.<br>
+        Auto deportivo con alta performance, perfecto para la ciudad y caminos.<br>
+        <strong>Características:</strong> Turbo, suspensión deportiva, sistema de seguridad avanzado.<br>
+        <strong>Color:</strong> Azul metálico<br>
+        <strong>Kilometraje:</strong> 15,000 km
+      `,
+      images: [
+        "images/carrusel/financiamiento.avif",
+        "images/carrusel/stock.avif",
+        "images/carrusel/vender.avif",
+        "images/carrusel/financiamiento.avif",
+        "images/carrusel/stock.avif",
+        "images/carrusel/vender.avif"
+      ]
+    },
+    suzuki: {
+      title: "Suzuki Swift 2023",
+      description: `
+        Compacto, económico y confiable.<br>
+        Motor 1.2L con excelente rendimiento urbano.<br>
+        <strong>Características:</strong> Aire acondicionado, sistema multimedia con Bluetooth, cámara trasera.<br>
+        <strong>Color:</strong> Rojo brillante<br>
+        <strong>Kilometraje:</strong> 20,500 km
+      `,
+      images: [
+        "images/SUZUKI/swift1.jpg",
+        "images/SUZUKI/swift2.jpg",
+        "images/SUZUKI/swift3.jpg"
+      ]
+    },
+    toyota: {
+      title: "Toyota Yaris 2022",
+      description: `
+        Compacto, eficiente y cómodo.<br>
+        Motor 1.3L con transmisión manual y bajo consumo.<br>
+        <strong>Características:</strong> Sistema Start/Stop, airbags múltiples, conectividad USB.<br>
+        <strong>Color:</strong> Blanco perlado<br>
+        <strong>Kilometraje:</strong> 18,000 km
+      `,
+      images: [
+        "images/TOYOTA/yaris1.jpg",
+        "images/TOYOTA/yaris2.jpg",
+        "images/TOYOTA/yaris3.jpg"
+      ]
+    }
+  };
+
+  // Detecta el auto por ID (ej: ?auto=subaru)
+  const params = new URLSearchParams(window.location.search);
+  const autoId = params.get('auto') || 'subaru'; // fallback si no se indica
+
+  const auto = autos[autoId];
+
+  if (auto) {
+    document.getElementById("car-title").textContent = auto.title;
+    document.getElementById("car-description").innerHTML = auto.description;
+
+    const mainImg = document.getElementById("main-img");
+    mainImg.src = auto.images[0];
+
+    const miniaturasDiv = document.getElementById("miniaturas");
+    miniaturasDiv.innerHTML = ""; // limpiar
+
+    auto.images.forEach(src => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "Miniatura";
+      img.onclick = () => (mainImg.src = src);
+      miniaturasDiv.appendChild(img);
+    });
+  } else {
+    document.getElementById("car-title").textContent = "Auto no encontrado";
+  }
+</script>
+
+
+
+
+  <footer class="footer-alt" data-aos="fade-up" data-aos-delay="400">
+    <div class="footer-wrap">
+      <div class="footer-column social">
+        <h4 class="footer-heading">Conéctate con nosotros</h4>
+        <div class="social-links">
+          <a href="https://www.instagram.com/ccautos.cl" target="_blank" aria-label="Instagram" class="icon-link">
+            <img src="images/icons/ig.svg" alt="Instagram" />
+          </a>
+          <a href="https://www.facebook.com/ccautos.cl" target="_blank" aria-label="Facebook" class="icon-link">
+            <img src="images/icons/fb.svg" alt="Facebook" />
+          </a>
+          <a href="https://wa.me/56988276054" target="_blank" aria-label="WhatsApp" class="icon-link">
+            <img src="images/icons/wp.svg" alt="WhatsApp" />
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-column map">
+        <h4 class="footer-heading">Encuéntranos aquí</h4>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2005.704283806157!2d-70.54977287795657!3d-33.4088170678863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce9569ad04e7%3A0xa64894df53a73b2f!2sAv.%20Apoquindo%207935%2C%207571514%20Las%20Condes%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e1!3m2!1ses!2snl!4v1753989873260!5m2!1ses!2snl"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <div class="footer-column quick-links">
+        <h4 class="footer-heading">Ubicación rápida</h4>
+        <nav class="quick-nav">
+          <a href="https://www.google.com/maps?q=Av.+Apoquindo+7935,+Las+Condes,+Chile" target="_blank" class="btn-quick">Google Maps</a>
+          <a href="https://waze.com/ul?ll=-33.4090082,-70.5496937&navigate=yes" target="_blank" class="btn-quick">Waze</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer-bottom-alt">
+      <p>&copy; 2025 <strong>CC Autos</strong>. Todos los derechos reservados.</p>
+      <p>Diseñado y protegido por <a href="mailto:picininiluciano@gmail.com">Luciano</a>.</p>
+    </div>
+  </footer>
+
+
+</body>
+</html>
